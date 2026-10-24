@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "agent-framework-bakeoff"
+version = "0.1.0"
+description = "One support agent built six ways, graded by one eval suite, fully offline"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest==8.4.2", "ruff==0.14.1"]
+openai-agents = ["openai-agents==0.24.0"]
+google-adk = ["google-adk==2.13.0"]
+crewai = ["crewai==1.15.29"]
+autogen = ["autogen-agentchat==0.7.5", "autogen-core==0.7.5"]
+langgraph = ["langgraph==1.2.17"]
+
+[project.scripts]
+bakeoff = "bakeoff.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 130
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "S"]
+ignore = ["S101", "S105", "S106", "S311"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["S"]
+"scripts/*" = ["S603", "S607"]
+"src/bakeoff/eval.py" = ["E501"]
+"src/bakeoff/adapters/*" = ["E501"]
+"src/bakeoff/cli.py" = ["E501"]
+"src/bakeoff/runner.py" = ["S603", "E501"]
